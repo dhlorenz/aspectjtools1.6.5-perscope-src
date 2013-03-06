@@ -1,0 +1,47 @@
+<project name="perscope" default="executeAll">
+	<import file="infra.xml" />
+
+
+	
+	<target name="compileOrig">
+		<compile_orig scopeName="pertargetOrig">
+		</compile_orig>
+	</target>
+
+	<target name="executeOrig" depends="compileOrig">
+		<delete file="C:\scope\output.txt" />
+		<delete file="C:\scope\outputOrig.txt" />
+		<java classname="my.MyClass">
+			<classpath>
+				<path refid="origClasspath" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destOrig\PertargetOrig" />
+			</classpath>			
+		</java>
+
+		<copy file="C:\scope\output.txt" tofile="C:\scope\outputOrig.txt" />
+	</target>
+
+
+	<target name="compilePerscope">
+		<compile_perscope scopeName="pertargetStorage">
+		</compile_perscope>
+	</target>
+
+	<target name="executePerscope" depends="preparePerscope, compilePerscope">
+		<delete file="C:\scope\output.txt" />
+		<delete file="C:\scope\outputPerscope.txt" />
+		<java classname="my.MyClass">
+			<arg value="-XnoInline" />
+			<classpath>
+				<path refid="perscopeClasspath" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destPerscope\PertargetStorage" />
+			</classpath>			
+		</java>
+		<copy file="C:\scope\output.txt" tofile="C:\scope\outputPerscope.txt" />
+	</target>
+
+
+
+	<target name="executeAll" depends="compileUtilities, executeOrig, executePerscope">
+	</target>
+</project>

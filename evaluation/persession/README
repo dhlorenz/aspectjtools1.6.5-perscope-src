@@ -1,0 +1,7 @@
+The Persession aspect instantiation model purpose is the have a dedicated aspect instance per specific user session. 
+It implements the DynamicPerscope interface. 
+As with any standard J2EE web application an HTTP Filter is implemented: PersessionWebFilter.
+This filtered is registered in web.xml deployment descriptor. In this example it is mapped to intercept every request to
+this web application.
+The basic idea is that the filter put the HTTP request on the thread local storage.
+The Persession fetches the request from thread local when needed and stores/fetches the aspect instance in/from there.

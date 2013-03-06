@@ -1,0 +1,71 @@
+<project name="perscope" default="execute">
+		<import file="infra.xml" />
+
+	<target name="compile_orig">
+			<mkdir dir="destOrig/cachingClient" />
+			<ajcOrig destdir="destOrig/cachingClient" argfiles="C:/lst/cachingClient.lst" >
+				<classpath>
+					<pathelement path="C:/aspectjtools/aspectjtools_orig/aspectjtools" />
+					<pathelement location="C:\eclipse\plugins\org.junit_3.8.2.v20090203-1005\junit.jar" />
+				</classpath>
+			</ajcOrig>
+	</target>
+
+	<target name="executeOrig" depends="compile_orig">
+		<java classname="CachingTest">
+			<classpath>
+				<pathelement path="C:/aspectjtools/aspectjtools_orig/aspectjtools" />
+				<pathelement location="C:\eclipse\plugins\org.junit_3.8.2.v20090203-1005\junit.jar" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destOrig\cachingClient" />
+			</classpath>			
+		</java>
+		
+	</target>
+
+	<target name="compilePerscope" depends="preparePerscope">
+			<mkdir dir="destPerscope/cachingClient" />
+			<ajcPerscope destdir="destPerscope/cachingClient" argfiles="C:/lst/cachingClientPerscope.lst" >
+				<classpath>
+					<pathelement path="C:/aspectjtools/aspectjtools" />
+					<pathelement location="C:\eclipse\plugins\org.junit_3.8.2.v20090203-1005\junit.jar" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destPerscope\cachingClient" />
+				</classpath>
+			</ajcPerscope>
+	</target>
+
+	<target name="executePerscope" depends="compilePerscope">
+		<java classname="CachingTest">
+			<classpath>
+				<pathelement path="C:/aspectjtools/aspectjtools" />
+				<pathelement location="C:\eclipse\plugins\org.junit_3.8.2.v20090203-1005\junit.jar" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destPerscope\cachingClient" />
+			</classpath>			
+		</java>
+		
+	</target>
+
+	<target name="compileStorage" depends="preparePerscope">
+			<mkdir dir="destStorage/caching" />
+			<ajcPerscope destdir="destStorage/cachingClient" argfiles="C:/lst/cachingClientStorage.lst" >
+			<classpath>
+				<pathelement path="C:/aspectjtools/aspectjtools" />
+				<pathelement location="C:\eclipse\plugins\org.junit_3.8.2.v20090203-1005\junit.jar" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destStorage\cachingClient" />
+			</classpath>			
+			</ajcPerscope>
+	</target>
+
+	<target name="executeStorage" depends="compileStorage">
+		<java classname="CachingTest">
+			<classpath>
+				<pathelement path="C:/aspectjtools/aspectjtools" />
+				<pathelement location="C:\eclipse\plugins\org.junit_3.8.2.v20090203-1005\junit.jar" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destStorage\cachingClient" />
+			</classpath>			
+		</java>
+		
+	</target>
+
+	<target name="execute" depends="executeOrig, executePerscope,executeStorage">
+	</target>
+</project>

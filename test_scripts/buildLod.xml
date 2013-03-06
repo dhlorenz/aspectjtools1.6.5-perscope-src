@@ -1,0 +1,66 @@
+<project name="perscope" default="execute">
+		<import file="infra.xml" />
+
+	<target name="compile_orig">
+			<mkdir dir="destOrig/lod" />
+			<ajcOrig destdir="destOrig/lod" argfiles="C:/lst/lod.lst" >
+				<classpath>
+					<pathelement path="C:/aspectjtools/aspectjtools_orig/aspectjtools" />
+				</classpath>
+			</ajcOrig>
+	</target>
+
+	<target name="executeOrig" depends="compile_orig">
+		<java classname="certrevsim.Simulator">
+			<arg line="10 30 90 5 6 1 1" />
+			<classpath>
+				<path refid="perscopeClasspath" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destOrig\lod" />
+			</classpath>			
+		</java>
+		
+	</target>
+
+	<target name="compilePerscope" depends="preparePerscope">
+			<mkdir dir="destPerscope/lod" />
+			<ajcPerscope destdir="destPerscope/lod" argfiles="C:/lst/lodPerscope.lst" >
+				<classpath>
+					<pathelement path="C:/aspectjtools/aspectjtools" />
+				</classpath>
+			</ajcPerscope>
+	</target>
+
+	<target name="executePerscope" depends="compilePerscope">
+		<java classname="certrevsim.Simulator">
+			<arg line="10 30 90 5 6 1 1" />
+			<classpath>
+				<path refid="perscopeClasspath" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destPerscope\lod" />
+			</classpath>			
+		</java>
+		
+	</target>
+
+	<target name="compileStorage" depends="preparePerscope">
+			<mkdir dir="destStorage/lod" />
+			<ajcPerscope destdir="destStorage/lod" argfiles="C:/lst/lodStorage.lst" >
+				<classpath>
+					<pathelement path="C:/aspectjtools/aspectjtools" />
+				</classpath>
+			</ajcPerscope>
+	</target>
+
+	<target name="executeStorage" depends="compileStorage">
+		<java classname="certrevsim.Simulator">
+			<arg line="10 30 90 5 6 1 1" />
+			<classpath>
+				<path refid="perscopeClasspath" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destStorage\lod" />
+			</classpath>			
+		</java>
+		
+	</target>
+
+	<target name="execute" depends="executeStorage">
+	</target>
+</project>

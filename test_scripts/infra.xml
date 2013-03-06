@@ -1,0 +1,105 @@
+<project name="infra">
+	<taskdef name="ajcOrig" classname="org.aspectj.tools.ant.taskdefs.Ajc10">
+		<classpath>
+			<pathelement path="C:\aspectjtools\aspectjtools_orig\aspectjtools" />
+		</classpath>
+	</taskdef>
+
+	<taskdef name="ajcPerscope" classname="org.aspectj.tools.ant.taskdefs.Ajc10">
+		<classpath>
+			<pathelement path="C:\aspectjtools\aspectjtools" />
+		</classpath>
+	</taskdef>
+
+
+	<path id="origClasspath">
+		<pathelement path="C:/aspectjtools/aspectjtools_orig/aspectjtools" />
+		<pathelement location="C:\downloads\commons-io-1.4-bin\commons-io-1.4\commons-io-1.4.jar" />
+		<pathelement path="C:\Users\yulia\workspace\Utilities\bin" />
+	</path>
+
+
+	<path id="perscopeClasspath">
+		<pathelement path="C:\aspectjtools\aspectjtools" />
+		<pathelement path="C:\Users\yulia\workspace\Utilities\bin" />
+		<pathelement location="C:\downloads\commons-io-1.4-bin\commons-io-1.4\commons-io-1.4.jar" />
+	</path>
+
+
+
+	<target name="compileUtilities">
+		<javac srcdir="C:\Users\yulia\workspace\Utilities\src" destdir="C:\Users\yulia\workspace\Utilities\bin" >
+			<classpath>
+				<pathelement location="C:\downloads\commons-io-1.4-bin\commons-io-1.4\commons-io-1.4.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="preparePerscope">
+		<copy todir="C:\aspectjtools\aspectjtools\org\aspectj\ajdt\internal\compiler\ast">
+			<fileset dir="C:\aspectj_src\bin\org\aspectj\ajdt\internal\compiler\ast">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+
+		<copy todir="C:\aspectjtools\aspectjtools\org\aspectj\ajdt\internal\compiler\ast\perscope">
+			<fileset dir="C:\aspectj_src\bin\org\aspectj\ajdt\internal\compiler\ast\perscope">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+
+		<copy todir="C:\aspectjtools\aspectjtools\org\aspectj\ajdt\internal\compiler\ast\perscope\storage">
+			<fileset dir="C:\aspectj_src\bin\org\aspectj\ajdt\internal\compiler\ast\perscope\storage">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+
+		<copy todir="C:\aspectjtools\aspectjtools\org\aspectj\weaver">
+			<fileset dir="C:\aspectj_src\bin\org\aspectj\weaver">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+
+		<copy todir="C:\aspectjtools\aspectjtools\org\aspectj\weaver\patterns">
+			<fileset dir="C:\aspectj_src\bin\org\aspectj\weaver\patterns">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+
+		<copy file="C:\aspectj_src\bin\org\aspectj\org\eclipse\jdt\internal\compiler\parser\Parser.class" tofile="C:\aspectjtools\aspectjtools\org\aspectj\org\eclipse\jdt\internal\compiler\parser\Parser.class" />
+
+		<copy file="C:\aspectj_src\bin\org\aspectj\org\eclipse\jdt\internal\compiler\parser\TheOriginalJDTParserClass.class" tofile="C:\aspectjtools\aspectjtools\org\aspectj\org\eclipse\jdt\internal\compiler\parser\TheOriginalJDTParserClass.class" />
+
+	</target>
+
+	<macrodef name="compile_orig">
+		<attribute name="scopeName"/>
+		<sequential>
+			<mkdir dir="destOrig/@{scopeName}" />
+			<ajcOrig destdir="destOrig/@{scopeName}" argfiles="C:/lst/@{scopeName}.lst" >
+				<classpath>
+					<pathelement path="C:/aspectjtools/aspectjtools_orig/aspectjtools" />
+					<pathelement location="C:\downloads\commons-io-1.4-bin\commons-io-1.4\commons-io-1.4.jar" />
+					<pathelement path="C:\Users\yulia\workspace\Utilities\bin" />
+				</classpath>
+			</ajcOrig>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="compile_perscope">
+		<attribute name="scopeName"/>
+		<sequential>
+			<mkdir dir="destPerscope/@{scopeName}" />
+			<ajcPerscope destdir="destPerscope/@{scopeName}" argfiles="C:/lst/@{scopeName}.lst" >
+				<classpath>
+					<pathelement path="C:\aspectjtools\aspectjtools" />
+					<pathelement path="C:\Users\yulia\workspace\Utilities\bin" />
+					<pathelement location="C:/downloads/commons-io-1.4-bin/commons-io-1.4/commons-io-1.4.jar" />					
+				</classpath>
+			</ajcPerscope>
+		</sequential>
+	</macrodef>
+
+
+
+</project>

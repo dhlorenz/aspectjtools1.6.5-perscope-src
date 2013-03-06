@@ -1,0 +1,27 @@
+<project name="perscope" default="executeAll">
+	<import file="infra.xml" />
+
+
+	<target name="compilePerscope">
+		<compile_perscope scopeName="perthreadStorage">
+		</compile_perscope>
+	</target>
+
+	<target name="executePerscope" depends="preparePerscope, compilePerscope">
+		<delete file="C:\scope\output.txt" />
+		<delete file="C:\scope\outputPerscope.txt" />
+		<java classname="my.MyClass">
+			<arg value="-XnoInline" />
+			<classpath>
+				<path refid="perscopeClasspath" />
+				<pathelement path="C:\aspectjtools\aspectjtools\destPerscope\PerthreadStorage" />
+			</classpath>			
+		</java>
+		<copy file="C:\scope\output.txt" tofile="C:\scope\outputPerscope.txt" />
+	</target>
+
+
+
+	<target name="executeAll" depends="compileUtilities, executePerscope">
+	</target>
+</project>
